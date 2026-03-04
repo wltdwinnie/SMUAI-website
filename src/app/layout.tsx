@@ -1,21 +1,29 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "SMUAI",
-  description: "SMU Artificial Intelligence Club",
+  description: "SMUAI",
+  icons: {
+    icon: "/brand/smuai_favicon.png",
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body>
-        <ThemeProvider>
-          <Navbar />
-          <main className="mx-auto max-w-6xl px-4 py-10">{children}</main>
-        </ThemeProvider>
+        <Navbar />
+        <main className="mx-auto w-full max-w-[1320px] px-5 pb-10 pt-0 lg:px-8">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

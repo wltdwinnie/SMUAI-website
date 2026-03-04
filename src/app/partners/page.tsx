@@ -5,7 +5,7 @@ export default function PartnersPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold">Partners</h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-brand-slate">
           Organizations that support SMUAI initiatives.
         </p>
       </div>
@@ -17,10 +17,10 @@ export default function PartnersPage() {
             href={p.website}
             target="_blank"
             rel="noreferrer"
-            className="rounded-2xl border p-5 hover:bg-muted"
+            className="rounded-2xl border p-5 hover:bg-brand-pale-gold"
           >
             <div className="font-medium">{p.name}</div>
-            <div className="mt-1 text-sm text-muted-foreground">{p.tagline ?? "—"}</div>
+            <div className="mt-1 text-sm text-brand-slate">{p.tagline ?? "—"}</div>
           </a>
         ))}
       </div>
