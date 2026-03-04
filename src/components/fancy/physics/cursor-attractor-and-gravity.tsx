@@ -15,7 +15,6 @@ import {
 } from "react"
 import { calculatePosition } from "@/utils/calculate-position"
 import { parsePathToVertices } from "@/utils/svg-path-to-vertices"
-import { debounce } from "lodash"
 import Matter, {
   Bodies,
   Common,
@@ -30,6 +29,33 @@ import decomp from "poly-decomp"
 
 import { cn } from "@/lib/utils"
 import { useMousePositionRef } from "@/hooks/use-mouse-position-ref"
+
+type DebouncedFn<T extends (...args: unknown[]) => void> = ((...args: Parameters<T>) => void) & {
+  cancel: () => void
+}
+
+function debounceFn<T extends (...args: unknown[]) => void>(fn: T, delayMs: number): DebouncedFn<T> {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null
+
+  const debounced = ((...args: Parameters<T>) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+    timeoutId = setTimeout(() => {
+      fn(...args)
+      timeoutId = null
+    }, delayMs)
+  }) as DebouncedFn<T>
+
+  debounced.cancel = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+      timeoutId = null
+    }
+  }
+
+  return debounced
+}
 
 type GravityProps = {
   children: ReactNode
@@ -170,12 +196,22 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
 
         const x = calculatePosition(props.x, canvasRect.width, width)
         const y = calculatePosition(props.y, canvasRect.height, height)
+        const matterBodyOptions: Matter.IBodyDefinition = {
+          ...(props.matterBodyOptions ?? {}),
+        }
+
+        if (matterBodyOptions.chamfer == null) {
+          delete matterBodyOptions.chamfer
+        }
+        const { chamfer, ...restBodyOptions } = matterBodyOptions
+        const rectangleBodyOptions: Matter.IChamferableBodyDefinition =
+          chamfer == null ? restBodyOptions : { ...restBodyOptions, chamfer }
 
         let body
         if (props.bodyType === "circle") {
           const radius = Math.max(width, height) / 2
           body = Bodies.circle(x, y, radius, {
-            ...props.matterBodyOptions,
+            ...matterBodyOptions,
             angle: angle,
             render: {
               fillStyle: debug ? "#888888" : "#00000000",
@@ -194,7 +230,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
           })
 
           body = Bodies.fromVertices(x, y, vertexSets, {
-            ...props.matterBodyOptions,
+            ...matterBodyOptions,
             angle: angle,
             render: {
               fillStyle: debug ? "#888888" : "#00000000",
@@ -204,7 +240,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
           })
         } else {
           body = Bodies.rectangle(x, y, width, height, {
-            ...props.matterBodyOptions,
+            ...rectangleBodyOptions,
             angle: angle,
             render: {
               fillStyle: debug ? "#888888" : "#00000000",
@@ -470,7 +506,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
     useEffect(() => {
       if (!resetOnResize) return
 
-      const debouncedResize = debounce(handleResize, 500)
+      const debouncedResize = debounceFn(handleResize, 500)
       window.addEventListener("resize", debouncedResize)
 
       return () => {

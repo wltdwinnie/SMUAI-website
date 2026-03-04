@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Navbar />
-        <main className="mx-auto w-full max-w-[1320px] px-5 pb-10 pt-0 lg:px-8">
+        <main className="mx-auto w-full max-w-[1320px] px-5 pb-10 pt-[72px] lg:px-8 lg:pt-[72px]">
           {children}
         </main>
         <Footer />
