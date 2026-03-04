@@ -10,7 +10,7 @@ export default function EventsPage() {
   const events = eventsByYear[year];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pt-6 lg:pt-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Events</h1>

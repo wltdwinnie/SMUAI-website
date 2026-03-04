@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import Gravity, { MatterBody } from "@/components/fancy/physics/cursor-attractor-and-gravity";
 import { heroGalleryImages } from "@/content/home";
 
@@ -17,6 +19,32 @@ const heroParticles = Array.from({ length: 80 }, (_, index) => {
 });
 
 export default function HeroSection() {
+  const slots = [
+    { x: 9, y: -14 },
+    { x: 29.5, y: 8 },
+    { x: 50, y: 34 },
+    { x: 70.5, y: 8 },
+    { x: 91, y: -14 },
+  ];
+  const [carouselItems, setCarouselItems] = useState(() =>
+    heroGalleryImages.slice(0, slots.length).map((src, index) => ({ id: index + 1, src }))
+  );
+  const nextImageRef = useRef(slots.length);
+  const idRef = useRef(slots.length + 1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselItems((current) => {
+        const nextSrc = heroGalleryImages[nextImageRef.current % heroGalleryImages.length];
+        nextImageRef.current += 1;
+
+        return [...current.slice(1), { id: idRef.current++, src: nextSrc }];
+      });
+    }, 2600);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative flex min-h-[calc(100svh-78px)] flex-col justify-center overflow-hidden bg-white pt-12">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(27,43,84,0.06),transparent_42%),radial-gradient(circle_at_80%_70%,rgba(81,97,133,0.08),transparent_44%)]" />
@@ -58,16 +86,31 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="marquee relative mt-12 w-full overflow-hidden py-6">
-        <div className="marquee-track">
-          {[...heroGalleryImages, ...heroGalleryImages].map((src, index) => (
-            <figure
-              key={`${src}-${index}`}
-              className="mx-3 inline-flex h-48 w-72 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-brand-soft bg-brand-cloud"
-            >
-              <Image src={src} alt={`SMUAI gallery ${index + 1}`} width={288} height={192} className="h-full w-full object-cover" />
-            </figure>
-          ))}
+      <div className="relative mt-14 w-full overflow-hidden py-10">
+        <div className="mx-auto h-[260px] w-full max-w-[1320px] px-2 sm:px-5 lg:px-8">
+          <AnimatePresence initial={false}>
+            {carouselItems.map((item, slotIndex) => {
+              const slot = slots[slotIndex];
+              const isEdge = slotIndex === 0 || slotIndex === slots.length - 1;
+
+              return (
+                <motion.figure
+                  key={item.id}
+                  initial={{ left: "106%", y: slots[slots.length - 1].y, opacity: 0.55 }}
+                  animate={{ left: `${slot.x}%`, y: slot.y, opacity: 1 }}
+                  exit={{ left: "-12%", y: slots[0].y, opacity: 0.5 }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                  className={`absolute top-8 -translate-x-1/2 overflow-hidden rounded-2xl border border-brand-soft bg-brand-cloud shadow-[0_25px_45px_-42px_rgba(27,43,84,0.5)] ${
+                    isEdge ? "hidden md:block" : ""
+                  }`}
+                >
+                  <div className="relative h-44 w-56 md:h-48 md:w-72">
+                    <Image src={item.src} alt="SMUAI gallery" fill className="object-cover" />
+                  </div>
+                </motion.figure>
+              );
+            })}
+          </AnimatePresence>
         </div>
       </div>
     </section>

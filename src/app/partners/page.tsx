@@ -2,7 +2,7 @@ import { partners } from "@/content/partners";
 
 export default function PartnersPage() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pt-6 lg:pt-8">
       <div>
         <h1 className="text-2xl font-semibold">Partners</h1>
         <p className="text-sm text-brand-slate">
