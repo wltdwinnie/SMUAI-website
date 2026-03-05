@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { eventsByYear, type EventItem } from "@/content/events";
 
 export default function EventsPage() {
@@ -39,26 +39,39 @@ export default function EventsPage() {
   }, []);
 
   return (
-    <div className="space-y-8 pt-6 lg:pt-8">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">Events</h1>
-          <p className="text-sm text-brand-slate">
+    <div className="relative left-1/2 w-screen -translate-x-1/2">
+      <section className="bg-white px-5 py-6 lg:px-8 lg:py-8">
+        <div className="mx-auto w-full max-w-[1320px] space-y-8">
+      <div className="space-y-4">
+        <div className="max-w-3xl">
+          <p className="text-sm font-bold uppercase tracking-[0.24em] text-brand-slate">Events</p>
+          <h1 className="mt-3 text-3xl font-black tracking-tight text-brand-deep-blue sm:text-4xl">
+            Community Events
+          </h1>
+          <p className="mt-3 text-sm text-brand-slate">
             Latest events are shown first. Luma signup is disabled after each event ends.
           </p>
         </div>
 
-        <select
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          className="w-full rounded-xl border bg-white px-3 py-2 text-sm sm:w-48"
-        >
-          {years.map((y) => (
-            <option key={y} value={y}>
-              AY{y}
-            </option>
-          ))}
-        </select>
+        <div className="ml-auto w-full max-w-xs">
+          <div className="relative">
+            <select
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              className="w-full appearance-none rounded-xl border bg-white px-3 py-2 pr-11 text-sm"
+            >
+              {years.map((y) => (
+                <option key={y} value={y}>
+                  AY{y}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={16}
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-brand-slate"
+            />
+          </div>
+        </div>
       </div>
 
       <div className="space-y-3">
@@ -132,6 +145,8 @@ export default function EventsPage() {
           );
         })}
       </div>
+        </div>
+      </section>
 
       {selectedEvent && (
         <div

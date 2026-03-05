@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Linkedin } from "lucide-react";
+import { ChevronDown, Linkedin } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   type TeamMember,
@@ -58,25 +58,34 @@ export default function TeamPage() {
     <div className="relative left-1/2 w-screen -translate-x-1/2">
       <section className="bg-white px-5 py-12 text-brand-deep-blue lg:px-8">
         <div className="mx-auto w-full max-w-[1320px] space-y-8">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold">Executive Committee</h1>
-              <p className="inline-flex rounded-full bg-brand-cloud px-3 py-1 text-sm text-brand-slate">
-                {executiveLabel}
-              </p>
+          <div className="space-y-4">
+            <div className="max-w-3xl">
+              <p className="text-sm font-bold uppercase tracking-[0.24em] text-brand-slate">Team</p>
+              <h1 className="mt-3 text-3xl font-black tracking-tight text-brand-deep-blue sm:text-4xl">
+                Executive Committee
+              </h1>
+              <p className="mt-3 text-sm text-brand-slate">{executiveLabel}</p>
             </div>
 
-            <select
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              className="w-full rounded-xl border bg-white px-3 py-2 text-sm sm:w-48"
-            >
-              {years.map((y) => (
-                <option key={y} value={y}>
-                  AY{y} • {executiveCommitteeByYear[y].excoNumber}
-                </option>
-              ))}
-            </select>
+            <div className="ml-auto w-full max-w-xs">
+              <div className="relative">
+                <select
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  className="w-full appearance-none rounded-xl border bg-white px-3 py-2 pr-11 text-sm"
+                >
+                  {years.map((y) => (
+                    <option key={y} value={y}>
+                      AY{y} • {executiveCommitteeByYear[y].excoNumber}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  size={16}
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-brand-slate"
+                />
+              </div>
+            </div>
           </div>
 
           <section className="space-y-4">

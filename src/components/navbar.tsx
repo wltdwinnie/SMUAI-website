@@ -21,7 +21,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-brand-deep-blue text-white backdrop-blur-xl">
-      <div className="relative mx-auto flex w-full max-w-[1320px] items-center justify-between px-5 py-4 lg:px-8">
+      <div className="relative mx-auto flex w-full max-w-[1380px] items-center justify-between px-5 py-4 lg:px-8">
         <Link href="/" className="transition-transform duration-300 hover:scale-[1.02]">
           <BrandLogo />
         </Link>

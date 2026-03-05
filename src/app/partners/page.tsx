@@ -2,10 +2,19 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { Globe, Linkedin, X } from "lucide-react";
+import type { FormEvent } from "react";
+import { Globe, Linkedin, Sparkles, X } from "lucide-react";
 import { partners } from "@/content/partners";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import type { Partner } from "@/content/partners";
+
+const contactTopics = [
+  "Partnership",
+  "Workshop",
+  "Sponsorship",
+  "Campus Event",
+  "General",
+];
 
 function PartnerNode({
   partner,
@@ -35,6 +44,14 @@ function PartnerNode({
 
 export default function PartnersPage() {
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    organization: "",
+    subject: "",
+    topic: "General",
+    message: "",
+  });
   const ring1 = useMemo(() => partners.slice(0, 9), []);
   const ring2 = useMemo(() => partners.slice(9, 15), []);
   const ring3 = useMemo(() => partners.slice(15, 18), []);
@@ -50,19 +67,67 @@ export default function PartnersPage() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  const handleContactSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const subject = contactForm.subject || `SMUAI Collaboration Inquiry - ${contactForm.topic}`;
+    const body = [
+      contactForm.message || "Hello SMUAI Team,",
+    ].join("\n");
+
+    const mailto = `mailto:smuai@smu.edu.sg?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  };
+
+  const handleGenerateDraft = () => {
+    const draft = [
+      `Hi SMUAI Team,`,
+      "",
+      `I'm ${contactForm.name || "[Your Name]"} from ${contactForm.organization || "[Organization]"}.`,
+      `I'm reaching out regarding ${contactForm.topic.toLowerCase()} collaboration opportunities.`,
+      "",
+      "Context:",
+      "- Goals:",
+      "- Proposed timeline:",
+      "- What support we are looking for:",
+      "",
+      "Looking forward to exploring this with your team.",
+      "",
+      "Best regards,",
+      contactForm.name || "[Your Name]",
+    ].join("\n");
+
+    setContactForm((prev) => ({
+      ...prev,
+      subject: prev.subject || `SMUAI ${prev.topic} Collaboration`,
+      message: draft,
+    }));
+  };
+
+  const previewBody = useMemo(
+    () =>
+      [
+        contactForm.message || "Your message preview appears here.",
+      ].join("\n"),
+    [contactForm],
+  );
+
   return (
     <div className="relative left-1/2 w-screen -translate-x-1/2">
-      <section className="relative bg-brand-cloud px-4 py-6 sm:px-6 sm:py-7 lg:px-8">
+      <section className="relative flex min-h-[calc(100svh-72px)] flex-col justify-start bg-brand-cloud px-5 pb-6 pt-6 lg:px-8 lg:pb-8 lg:pt-8">
         <div className="relative mx-auto w-full max-w-[1320px]">
-          <div>
-            <h1 className="text-2xl font-semibold">Partners</h1>
-            <p className="mt-1 text-sm text-brand-slate">Organizations we have collaborated with.</p>
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.24em] text-brand-slate">Partners</p>
+            <h1 className="mt-3 text-3xl font-black tracking-tight text-brand-deep-blue sm:text-4xl">
+              Our Partner Network
+            </h1>
+            <p className="mt-3 text-sm text-brand-slate">Organizations we have collaborated with.</p>
           </div>
 
-          <div className="group/orbit relative mx-auto mt-1 flex h-[640px] w-full max-w-[1220px] items-center justify-center overflow-visible sm:h-[700px]">
+          <div className="group/orbit relative mx-auto mt-2 flex h-[520px] w-full max-w-[1220px] items-center justify-center overflow-visible sm:h-[560px] lg:h-[620px]">
           {ring1.length > 0 && (
             <OrbitingCircles
-              radius={300}
+              radius={250}
               path
               iconSize={92}
               speed={0.8}
@@ -76,7 +141,7 @@ export default function PartnersPage() {
 
           {ring2.length > 0 && (
             <OrbitingCircles
-              radius={190}
+              radius={160}
               path
               reverse
               iconSize={92}
@@ -91,7 +156,7 @@ export default function PartnersPage() {
 
           {ring3.length > 0 && (
             <OrbitingCircles
-              radius={65}
+              radius={55}
               path
               iconSize={92}
               speed={1.2}
@@ -102,6 +167,137 @@ export default function PartnersPage() {
               ))}
             </OrbitingCircles>
           )}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-10 lg:px-8">
+        <div className="mx-auto w-full max-w-[1320px]">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.24em] text-brand-slate">Contact</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-brand-deep-blue sm:text-4xl">Reach Out To Us</h2>
+            <p className="mt-2 text-sm leading-relaxed text-brand-slate">
+              For partnerships, events, or collaboration opportunities, contact{" "}
+              <a
+                href="mailto:smuai@smu.edu.sg"
+                className="font-semibold text-brand-deep-blue underline underline-offset-4"
+              >
+                smuai@smu.edu.sg
+              </a>
+              . This sends via the visitor&apos;s own email app.
+            </p>
+          </div>
+
+          <div className="mt-6 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+            <form onSubmit={handleContactSubmit} className="rounded-2xl border border-brand-soft bg-white p-4 shadow-[0_24px_40px_-34px_rgba(27,43,84,0.35)] sm:p-5">
+              <div className="mb-4 flex flex-wrap gap-2">
+                {contactTopics.map((topic) => (
+                  <button
+                    key={topic}
+                    type="button"
+                    onClick={() =>
+                      setContactForm((prev) => ({
+                        ...prev,
+                        topic,
+                        subject:
+                          prev.subject && prev.subject !== `SMUAI ${prev.topic} Collaboration`
+                            ? prev.subject
+                            : `SMUAI ${topic} Collaboration`,
+                      }))
+                    }
+                    className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                      contactForm.topic === topic
+                        ? "bg-brand-deep-blue text-white"
+                        : "bg-brand-cloud text-brand-slate hover:bg-brand-soft"
+                    }`}
+                  >
+                    {topic}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid gap-3">
+                <input
+                  type="text"
+                  required
+                  value={contactForm.name ?? ""}
+                  onChange={(e) => setContactForm((prev) => ({ ...prev, name: e.target.value }))}
+                  placeholder="Your name"
+                  className="w-full rounded-xl border border-brand-soft bg-white px-3 py-2 text-sm text-brand-deep-blue outline-none transition focus:border-brand-deep-blue"
+                />
+                <input
+                  type="email"
+                  required
+                  value={contactForm.email ?? ""}
+                  onChange={(e) => setContactForm((prev) => ({ ...prev, email: e.target.value }))}
+                  placeholder="Your email"
+                  className="w-full rounded-xl border border-brand-soft bg-white px-3 py-2 text-sm text-brand-deep-blue outline-none transition focus:border-brand-deep-blue"
+                />
+                <input
+                  type="text"
+                  value={contactForm.organization ?? ""}
+                  onChange={(e) => setContactForm((prev) => ({ ...prev, organization: e.target.value }))}
+                  placeholder="Organization (optional)"
+                  className="w-full rounded-xl border border-brand-soft bg-white px-3 py-2 text-sm text-brand-deep-blue outline-none transition focus:border-brand-deep-blue"
+                />
+                <input
+                  type="text"
+                  value={contactForm.subject ?? ""}
+                  onChange={(e) => setContactForm((prev) => ({ ...prev, subject: e.target.value }))}
+                  placeholder="Subject"
+                  className="w-full rounded-xl border border-brand-soft bg-white px-3 py-2 text-sm text-brand-deep-blue outline-none transition focus:border-brand-deep-blue"
+                />
+                <textarea
+                  required
+                  value={contactForm.message ?? ""}
+                  onChange={(e) => setContactForm((prev) => ({ ...prev, message: e.target.value }))}
+                  placeholder="How would you like to collaborate?"
+                  rows={6}
+                  className="w-full resize-y rounded-xl border border-brand-soft bg-white px-3 py-2 text-sm text-brand-deep-blue outline-none transition focus:border-brand-deep-blue"
+                />
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={handleGenerateDraft}
+                    className="inline-flex items-center gap-2 rounded-full border border-brand-soft bg-brand-cloud px-4 py-2 text-sm font-semibold text-brand-deep-blue transition hover:bg-brand-soft"
+                  >
+                    <Sparkles size={15} />
+                    Smart Draft
+                  </button>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center rounded-full bg-brand-deep-blue px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-deep-blue/90"
+                  >
+                    Compose Email
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <aside className="rounded-2xl border border-brand-soft bg-white p-4 text-brand-deep-blue shadow-[0_24px_40px_-34px_rgba(27,43,84,0.35)] sm:p-5">
+              <p className="text-xs uppercase tracking-[0.16em] text-brand-slate">Email Preview</p>
+              <p className="mt-3 text-sm text-brand-slate">
+                To: <span className="font-semibold text-brand-deep-blue">smuai@smu.edu.sg</span>
+              </p>
+              <p className="mt-1 text-sm text-brand-slate">
+                Subject:{" "}
+                <span className="font-semibold text-brand-deep-blue">
+                  {contactForm.subject || `SMUAI ${contactForm.topic} Collaboration`}
+                </span>
+              </p>
+              <p className="mt-1 text-sm text-brand-slate">
+                Topic: <span className="font-semibold text-brand-deep-blue">{contactForm.topic}</span>
+              </p>
+              <p className="mt-1 text-sm text-brand-slate">
+                From:{" "}
+                <span className="font-semibold text-brand-deep-blue">
+                  {[contactForm.name, contactForm.email, contactForm.organization].filter(Boolean).join(" • ") || "—"}
+                </span>
+              </p>
+              <pre className="mt-4 max-h-[290px] overflow-auto whitespace-pre-wrap rounded-xl bg-brand-cloud p-3 text-sm leading-relaxed text-brand-deep-blue">
+                {previewBody}
+              </pre>
+            </aside>
           </div>
         </div>
       </section>
