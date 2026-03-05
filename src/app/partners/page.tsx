@@ -75,7 +75,7 @@ export default function PartnersPage() {
       contactForm.message || "Hello SMUAI Team,",
     ].join("\n");
 
-    const mailto = `mailto:smuai@smu.edu.sg?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailto = `mailto:smuai@sa.smu.edu.sg?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailto;
   };
 
@@ -179,10 +179,10 @@ export default function PartnersPage() {
             <p className="mt-2 text-sm leading-relaxed text-brand-slate">
               For partnerships, events, or collaboration opportunities, contact{" "}
               <a
-                href="mailto:smuai@smu.edu.sg"
+                href="mailto:smuai@sa.smu.edu.sg"
                 className="font-semibold text-brand-deep-blue underline underline-offset-4"
               >
-                smuai@smu.edu.sg
+                smuai@sa.smu.edu.sg
               </a>
               . This sends via the visitor&apos;s own email app.
             </p>
@@ -277,7 +277,7 @@ export default function PartnersPage() {
             <aside className="rounded-2xl border border-brand-soft bg-white p-4 text-brand-deep-blue shadow-[0_24px_40px_-34px_rgba(27,43,84,0.35)] sm:p-5">
               <p className="text-xs uppercase tracking-[0.16em] text-brand-slate">Email Preview</p>
               <p className="mt-3 text-sm text-brand-slate">
-                To: <span className="font-semibold text-brand-deep-blue">smuai@smu.edu.sg</span>
+                To: <span className="font-semibold text-brand-deep-blue">smuai@sa.smu.edu.sg</span>
               </p>
               <p className="mt-1 text-sm text-brand-slate">
                 Subject:{" "}
