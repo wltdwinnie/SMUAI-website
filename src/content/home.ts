@@ -13,6 +13,9 @@ export const heroGalleryImages = [
   "/gallery/smuai-06.jpg",
   "/gallery/smuai-07.jpg",
   "/gallery/smuai-08.jpg",
+  "/gallery/smuai-09.jpg",
+  "/gallery/smuai-10.jpg",
+  "/gallery/smuai-11.jpg",
 ];
 
 export const testimonials: Testimonial[] = [

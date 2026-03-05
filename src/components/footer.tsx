@@ -17,46 +17,26 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-brand-soft bg-brand-cloud text-brand-deep-blue">
-      <div className="mx-auto grid w-full max-w-[1320px] gap-10 px-5 py-14 lg:grid-cols-[1.3fr_1fr_1.1fr] lg:px-8">
-        <div>
+    <footer className="border-t border-white/10 bg-brand-deep-blue text-white">
+      <div className="grid w-full gap-8 px-5 py-12 lg:grid-cols-[1.2fr_0.7fr_0.85fr] lg:items-start lg:gap-14 lg:px-12 xl:px-16">
+        <div className="max-w-[360px] lg:-mt-4 lg:self-start">
           <Image
-            src="/brand/smuai_navy_logo.png"
+            src="/brand/smuai_lion_logo.png"
             alt="SMUAI"
-            width={260}
-            height={81}
-            className="h-auto w-[220px]"
+            width={280}
+            height={280}
+            className="h-auto w-[230px] object-contain object-top"
           />
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-brand-slate">
-            Student-led AI community at SMU, building ideas through events, projects, and partnerships.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {socialLinks.map((item) => {
-              const Icon = item.icon;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target={item.href.startsWith("http") ? "_blank" : undefined}
-                  rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                  className="inline-flex items-center gap-2 rounded-full border border-brand-soft bg-white/70 px-4 py-2 text-sm font-semibold text-brand-deep-blue transition hover:border-brand-gold hover:text-brand-deep-blue"
-                >
-                  <Icon size={16} />
-                  {item.label}
-                </a>
-              );
-            })}
-          </div>
         </div>
 
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-brand-slate">Shortcuts</h3>
+          <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white/60">Shortcuts</h3>
           <ul className="mt-5 space-y-3">
             {quickLinks.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-base font-medium text-brand-deep-blue transition-colors hover:text-brand-slate"
+                  className="text-base font-medium text-white transition-colors hover:text-brand-gold"
                 >
                   {item.label}
                 </Link>
@@ -66,21 +46,29 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-brand-slate">Membership</h3>
-          <p className="mt-5 text-sm leading-relaxed text-brand-slate">
-            Registration form is currently being prepared. Join once the next intake opens.
-          </p>
-          <a
-            href="mailto:smuai@sa.smu.edu.sg?subject=SMUAI%20Membership%20Registration%20Interest"
-            className="mt-6 inline-flex items-center rounded-full border border-brand-deep-blue bg-brand-deep-blue px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-brand-deep-blue"
-          >
-            Membership Registration (TBC)
-          </a>
+          <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white/60">Social</h3>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {socialLinks.map((item) => {
+              const Icon = item.icon;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-2 text-sm font-semibold text-white transition hover:border-brand-gold hover:text-brand-gold"
+                >
+                  <Icon size={16} />
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-brand-soft">
-        <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-2 px-5 py-5 text-xs text-brand-slate sm:flex-row sm:items-center sm:justify-between lg:px-8">
+      <div className="border-t border-white/10">
+        <div className="flex w-full flex-col gap-2 px-5 py-5 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between lg:px-12 xl:px-16">
           <p>© {new Date().getFullYear()} SMUAI. All rights reserved.</p>
           <p>Singapore Management University</p>
         </div>
