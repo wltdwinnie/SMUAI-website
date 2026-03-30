@@ -25,6 +25,10 @@ export default function TeamPage() {
 
   const executiveCommittee = executiveCommitteeByYear[year];
   const executiveLabel = `AY${year} • ${executiveCommittee.excoNumber}`;
+  const departmentGridClass =
+    executiveCommittee.departments.length >= 4
+      ? "grid gap-5 md:grid-cols-2 xl:grid-cols-4"
+      : "grid gap-5 md:grid-cols-2 xl:grid-cols-3";
 
   const renderFeaturedCard = (member: TeamMember, key: string) => (
     <article
@@ -99,7 +103,7 @@ export default function TeamPage() {
 
           <section className="space-y-5">
             <h2 className="text-lg font-semibold">Department Leads & Executives</h2>
-            <div className="grid gap-5 lg:grid-cols-3">
+            <div className={departmentGridClass}>
               {executiveCommittee.departments.map((department) => (
                 <div key={department.name} className="rounded-3xl bg-brand-cloud p-5">
                   <div className="mb-3 text-base font-semibold">{department.name}</div>
@@ -107,7 +111,7 @@ export default function TeamPage() {
                   <div
                     className={
                       department.leads.length === 1
-                        ? "mt-2 flex justify-center"
+                        ? "mt-2"
                         : "mt-2 grid gap-3 sm:grid-cols-2"
                     }
                   >

@@ -18,6 +18,86 @@ export type ExecutiveCommitteeByYear = {
 };
 
 export const executiveCommitteeByYear: Record<string, ExecutiveCommitteeByYear> = {
+  "26/27": {
+    excoNumber: "8th ExCo",
+    leadership: [
+      { name: "Eric Law", position: "President", photo: "/team/exco/26-27/president.jpg" },
+      { name: "Win Lei Thawdar", position: "Vice-President", photo: "/team/exco/26-27/vice-president.jpg" },
+      { name: "TBC", position: "HGS", photo: "/team/exco/26-27/hgs.jpg" },
+      { name: "TBC", position: "HFS", photo: "/team/exco/26-27/hfs.jpg" },
+    ],
+    departments: [
+      {
+        name: "Programmes",
+        leads: [{ name: "TBC", position: "Programmes Lead", photo: "/team/exco/26-27/programmes-lead.jpg" }],
+        executives: [
+          {
+            name: "Harry Ng",
+            position: "Programmes Executive",
+            photo: "/team/exco/26-27/programmes-executive-1.jpg",
+          },
+          {
+            name: "TBC",
+            position: "Programmes Executive",
+            photo: "/team/exco/26-27/programmes-executive-2.jpg",
+          },
+          {
+            name: "TBC",
+            position: "Programmes Executive",
+            photo: "/team/exco/26-27/programmes-executive-3.jpg",
+          },
+          {
+            name: "TBC",
+            position: "Programmes Executive",
+            photo: "/team/exco/26-27/programmes-executive-4.jpg",
+          },
+        ],
+      },
+      {
+        name: "Partnerships",
+        leads: [{ name: "Isaac Pua", position: "Partnerships Lead", photo: "/team/exco/26-27/partnerships-lead.jpg" }],
+        executives: [
+          {
+            name: "TBC",
+            position: "Partnerships Executive",
+            photo: "/team/exco/26-27/partnerships-executive-1.jpg",
+          },
+          {
+            name: "TBC",
+            position: "Partnerships Executive",
+            photo: "/team/exco/26-27/partnerships-executive-2.jpg",
+          },
+          {
+            name: "TBC",
+            position: "Partnerships Executive",
+            photo: "/team/exco/26-27/partnerships-executive-3.jpg",
+          },
+        ],
+      },
+      {
+        name: "Marketing",
+        leads: [{ name: "TBC", position: "Marketing Lead", photo: "/team/exco/26-27/marketing-lead.jpg" }],
+        executives: [
+          {
+            name: "TBC",
+            position: "Marketing Executive",
+            photo: "/team/exco/26-27/marketing-executive-1.jpg",
+          },
+        ],
+      },
+      {
+        name: "Research",
+        leads: [{ name: "Darrius Ng", position: "Research Lead", photo: "/team/exco/26-27/research-lead.jpg" }],
+        executives: [
+          {
+            name: "Yi Khuen Chai",
+            position: "Research Executive",
+            photo: "/team/exco/26-27/research-executive-1.jpg",
+          },
+        ],
+      },
+    ],
+  },
   "25/26": {
     excoNumber: "7th ExCo",
     leadership: [
@@ -29,10 +109,10 @@ export const executiveCommitteeByYear: Record<string, ExecutiveCommitteeByYear> 
     departments: [
       {
         name: "Programmes",
-        leads: [{ name: "Harry Ng", position: "Programmes Lead", photo: "/team/exco/25-26/programmes-lead.jpg" }],
+        leads: [{ name: "Jones Koh", position: "Programmes Lead", photo: "/team/exco/25-26/programmes-lead.jpg" }],
         executives: [
           {
-            name: "Jones Koh",
+            name: "Harry Ng",
             position: "Programmes Executive",
             photo: "/team/exco/25-26/programmes-executive-1.jpg",
           },
